@@ -27,8 +27,7 @@ public class Balloon extends Move {
     BalloonAnimations balloomAnimations;
     Direction currentDirection;
 
-    public Balloon() {
-    }
+    public Balloon() {}
 
     public Balloon(int x, int y) {
         init(x, y);
@@ -65,18 +64,6 @@ public class Balloon extends Move {
         return bounderBox.checkCollision(temp);
     }
 
-    public void render() {
-        if (sprite != null && isAlive()) {
-            Render.playAnimation(sprite);
-        }
-        if (!isAlive()) {
-            Render.playAnimation(balloomAnimations.getDie());
-            if (new Date().getTime() > (600 + dieTime.getTime())) {
-                disappear = true;
-            }
-        }
-    }
-
     public void RandomMoving() {
         int direction;
         if ((positionX % 48 == 0 && positionY % 48 == 0) || ((positionY + 2) % 48 == 0) || ((positionX + 2) % 48 == 0) ||
@@ -97,6 +84,18 @@ public class Balloon extends Move {
             case 3:
                 move(step, Direction.RIGHT);
                 break;
+        }
+    }
+
+    public void render() {
+        if (sprite != null && isAlive()) {
+            Render.playAnimation(sprite);
+        }
+        if (!isAlive()) {
+            Render.playAnimation(balloomAnimations.getDie());
+            if (new Date().getTime() > (600 + dieTime.getTime())) {
+                disappear = true;
+            }
         }
     }
 

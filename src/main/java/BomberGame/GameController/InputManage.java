@@ -18,10 +18,13 @@ public class InputManage {
         List keyInputs = Event.getInputList();
         Player player = board.getPlayer();
         Vector<Balloon> balloons = board.getBalloons();
+/*
         for (int i = 0; i < balloons.size(); i++) {
-          balloons.elementAt(i).RandomMoving();
+            balloons.elementAt(i).RandomMoving();
         }
 
+
+ */
         if (keyInputs.contains(KeyCode.UP)) {
             player.move(player.step, Direction.UP);
             System.out.println("move up");

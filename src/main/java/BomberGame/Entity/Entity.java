@@ -16,9 +16,7 @@ public abstract class Entity {
 
     public Entity(int x, int y) {}
 
-    public Entity() {
-
-    }
+    public Entity() {}
 
     abstract public boolean isCollideEntity(Entity b);
 

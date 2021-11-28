@@ -11,7 +11,9 @@ import BomberGame.Entity.Move;
 import BomberGame.Entity.PowerUp.BombUp;
 import BomberGame.Entity.PowerUp.FlameUp;
 import BomberGame.Entity.PowerUp.SpeedUp;
+import BomberGame.Entity.Tiles.Brick;
 import BomberGame.Entity.Tiles.Portal;
+import BomberGame.Entity.Tiles.Wall;
 import BomberGame.GloVariables.Direction;
 import BomberGame.GloVariables.GloVariables;
 import BomberGame.Render;
@@ -114,9 +116,16 @@ public class Player extends Move {
                         ((Bomb) e).PlayerCollisionFriendly = false;
                     }
                 }
+                /*
                 if (!(e instanceof Balloon) && e != this && isCollideEntity(e) && !e.isCollidePlayer()) {
                     bounderBox.setPosition(positionX, positionY);
                     return true;
+                }
+
+                 */
+                if(!(e instanceof Wall && e != this && isCollideEntity(e) && !e.isCollidePlayer())) {
+                    bounderBox.setPosition(positionX, positionY);
+                    return false;
                 }
             }
         }
