@@ -2,10 +2,16 @@ package BomberGame.Player;
 
 import BomberGame.Animations.PlayerAnimations;
 import BomberGame.Animations.Sprite;
+import BomberGame.Entity.BombAndFlame.Bomb;
 import BomberGame.Entity.BombAndFlame.Flame;
 import BomberGame.Entity.Bounder.BounderBox;
+import BomberGame.Entity.Enemy.Balloon;
 import BomberGame.Entity.Entity;
 import BomberGame.Entity.Move;
+import BomberGame.Entity.PowerUp.BombUp;
+import BomberGame.Entity.PowerUp.FlameUp;
+import BomberGame.Entity.PowerUp.SpeedUp;
+import BomberGame.Entity.Tiles.Portal;
 import BomberGame.GloVariables.Direction;
 import BomberGame.GloVariables.GloVariables;
 import BomberGame.Render;
@@ -19,7 +25,6 @@ public class Player extends Move {
     public static int bombCount = 1;
     boolean isAlive = true;
     boolean disappear = false;
-
     Date dieTime;
     Direction currentDirection;
     PlayerAnimations playerAnimations;
@@ -80,45 +85,44 @@ public class Player extends Move {
     }
 
     private boolean checkCollisions(int x, int y) {
-        return true;
-//        bounderBox.setPosition(x, y);
-//        for (Entity e : board.getEntities()) {
-//            if (e instanceof Portal && isCollideEntity(e) && Board.enemy == 0) {
-//                Level = (Level % 4) + 1;
-//                GlobalVariables.NewGame = true;
-//                passLevel = true;
-//            } else {
-//                if (e instanceof FlamePowerup && isCollideEntity(e)) {
-    //BlackBomb.radius++;
-//                    ((FlamePowerup) e).checkCollision(true);
-//                }
-//                if (e instanceof BombPowerup && isCollideEntity(e)) {
-//                    bombCount++;
-//                    ((BombPowerup) e).checkCollision(true);
-//                }
-//                if (e instanceof SpeedPowerup && isCollideEntity(e)) {
-//                    step++;
- //                   ((SpeedPowerup) e).checkCollision(true);
-//                }
-//                if (e instanceof BlackBomb) {
-//                    boolean bol1 = Math.abs(this.getPositionY() - e.getPositionY()) < 42;
-//                    boolean bol2 = Math.abs(this.getPositionX() - e.getPositionX()) < 42;
-//                    if (bol1 && bol2 && ((BlackBomb) e).CollidedPlayer == false && e.isCollidePlayer() == true) {
-//                        ((BlackBomb) e).CollidedPlayer = true;
-//                    }
- //                   if (!bol1 || !bol2 && ((BlackBomb) e).CollidedPlayer == true) {
-//                        ((BlackBomb) e).PlayerCollisionFriendly = false;
-//                    }
-//                }
-//                if (!(e instanceof Balloom) && e != this && isCollideEntity(e) && !e.isCollidePlayer()) {
- //                   bounderBox.setPosition(positionX, positionY);
- //                   return true;
- //               }
- //           }
-//        }
-//        bounderBox.setPosition(positionX, positionY);
-//        return false;
+        bounderBox.setPosition(x, y);
+        for (Entity e : board.getEntities()) {
+            if (e instanceof Portal && isCollideEntity(e) && board.enemy == 0) {
+                GloVariables.Level = (GloVariables.Level % 4) + 1;
+                GloVariables.NewGame = true;
+                GloVariables.passLevel = true;
+            } else {
+                if (e instanceof FlameUp && isCollideEntity(e)) {
+                    Bomb.radius++;
+                    ((FlameUp) e).checkCollision(true);
+                }
+                if (e instanceof BombUp && isCollideEntity(e)) {
+                    bombCount++;
+                    ((BombUp) e).checkCollision(true);
+                }
+                if (e instanceof SpeedUp && isCollideEntity(e)) {
+                    step++;
+                    ((SpeedUp) e).checkCollision(true);
+                }
+                if (e instanceof Bomb) {
+                    boolean bol1 = Math.abs(this.getPositionY() - e.getPositionY()) < 42;
+                    boolean bol2 = Math.abs(this.getPositionX() - e.getPositionX()) < 42;
+                    if (bol1 && bol2 && ((Bomb) e).CollidedPlayer == false && e.isCollidePlayer() == true) {
+                        ((Bomb) e).CollidedPlayer = true;
+                    }
+                    if (!bol1 || !bol2 && ((Bomb) e).CollidedPlayer == true) {
+                        ((Bomb) e).PlayerCollisionFriendly = false;
+                    }
+                }
+                if (!(e instanceof Balloon) && e != this && isCollideEntity(e) && !e.isCollidePlayer()) {
+                    bounderBox.setPosition(positionX, positionY);
+                    return true;
+                }
+            }
         }
+        bounderBox.setPosition(positionX, positionY);
+        return false;
+    }
 
     public boolean remove() {
         if (isAlive) {

@@ -19,7 +19,7 @@ public class PlayerAnimations {
     double playSpeed;
 
     public PlayerAnimations(Entity e, double scale) {
-        Image img = Render.getmainSheet();
+        Image img = Render.getMainSheet();
         playSpeed = 0.1;
         moveDown = new Sprite(e, 30, playSpeed, 0, 0, 3, GloVariables.PLAYER_WIDTH, GloVariables.PLAYER_HEIGHT, scale);
         moveLeft = new Sprite(e, 30, playSpeed, 30, 0, 3, GloVariables.PLAYER_WIDTH, GloVariables.PLAYER_HEIGHT, scale);

@@ -33,7 +33,7 @@ public class BounderBox {
     }
 
     public boolean checkCollision(BounderBox b) {
-        return b.getBoundary().intersects(getBoundary());
+        return b.getBoundary().intersects(this.boundary);
     }
 
     public void setPosition(int x, int y) {

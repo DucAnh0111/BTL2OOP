@@ -18,7 +18,6 @@ public class BombermanMain extends Application {
         board.setupScene();
         Scene s = board.getScene();
         stage.setScene(s);
-
         stage.show();
     }
 

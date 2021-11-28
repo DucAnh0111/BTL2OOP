@@ -1,9 +1,10 @@
 package BomberGame.GloVariables;
 public class GloVariables {
-    public static int SCENE_WIDTH = 1488;
-    public static int SCENE_HEIGHT = 625;
+
+    public static int SCENE_WIDTH = 960;
+    public static int SCENE_HEIGHT = 624;
     public static int CELL_SIZE = 48;
-    public static int CANVAS_WIDTH = 1488;
+    public static int CANVAS_WIDTH = 960;
     public static int CANVAS_HEIGHT = 624;
     public static String GAME_NAME = "BomberMan";
     public static int PLAYER_WIDTH = 18;
@@ -14,4 +15,5 @@ public class GloVariables {
     public static boolean passLevel = false;
     public static boolean NewGame = false;
     public static int Level = 1;
+
 }

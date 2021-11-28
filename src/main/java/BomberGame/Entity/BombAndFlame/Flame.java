@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Flame extends Entity {
-    static Image img = Render.getmainSheet();
+    static Image img = Render.getMainSheet();
     static List<Rectangle> vertical = new ArrayList<>();
     static List<Rectangle> horizonal = new ArrayList<>();
     static List<Rectangle> up = new ArrayList<>();
@@ -68,6 +68,7 @@ public class Flame extends Entity {
     Date explodeTime;
 
     public Flame(int x, int y, int direction, boolean last) {
+        super();
         this.positionX = x;
         this.positionY = y;
         this.direction = direction;
@@ -125,7 +126,7 @@ public class Flame extends Entity {
         State = state;
     }
 
-    public void setTimeDuratione(int time) {
+    public void setTimeDuration(int time) {
         timing = time;
     }
 
@@ -150,6 +151,11 @@ public class Flame extends Entity {
         if (!checkFlameState()) {
             Render.playAnimation(sprite);
         }
+    }
+
+    @Override
+    public void die() {
+
     }
 
     @Override

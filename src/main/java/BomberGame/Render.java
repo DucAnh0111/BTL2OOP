@@ -13,7 +13,7 @@ public class Render {
         img = ImageCrop.loadImage("Resourses/img/texture.png");
     }
 
-    public static Image getmainSheet() {
+    public static Image getMainSheet() {
         return img;
     }
 
@@ -27,12 +27,12 @@ public class Render {
         }
     }
 
-    public static void playAnimation(Image[] imgs, double speed, int x, int y, double w, double h) {
+    public static void playAnimation(Image[] images, double speed, int x, int y, double w, double h) {
         double time = 0;
         GraphicsContext gc = board.getGraphicsContext();
-        int numberOfFrames = imgs.length;
+        int numberOfFrames = images.length;
         int index = CurrentFrame(time, numberOfFrames, speed);
-        gc.drawImage(imgs[index], x, y, w, h);
+        gc.drawImage(images[index], x, y, w, h);
     }
 
 

@@ -1,12 +1,15 @@
 package BomberGame.Sence;
 
+import BomberGame.Entity.Enemy.Balloon;
 import BomberGame.Entity.Entity;
+import BomberGame.Entity.Tiles.Brick;
 import BomberGame.Entity.Tiles.Grass;
 import BomberGame.Entity.Tiles.Tile;
 import BomberGame.Entity.Tiles.Wall;
 import BomberGame.GameLoop;
 import BomberGame.GloVariables.GloVariables;
 import BomberGame.Player.Player;
+import BomberGame.GameController.*;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -19,8 +22,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Vector;
 
-import BomberGame.GloVariables.GloVariables.*;
-
 public class board {
     static Scene scene;
     static Group root;
@@ -30,12 +31,14 @@ public class board {
     public static int enemy;
     static Player player;
 
+
     static {
         sceneStarted = false;
     }
 
     static Vector<Tile> tiles = new Vector<>();
     static Vector<Entity> entities = new Vector<>();
+    static Vector<Balloon> balloons = new Vector<>();
 
     public static Vector<Entity> getEntities() {
         return entities;
@@ -71,16 +74,17 @@ public class board {
         } catch (IOException e) {
             System.err.println("Unable to load map");
         }
+
+        Event.attachEventHandlers(scene);
     }
 
     public static void loadMap() throws IOException {
-        String path = "Resourses/maps/Level1.txt";
+        String path = "Resourses/maps/Level3.txt";
         try (BufferedReader inputStream = new BufferedReader(new FileReader(path))) {
             String line;
 
             int y = 0;
             while ((line = inputStream.readLine()) != null) {
-                System.out.println(line.length());
                 line += "c";
                 for (int x = 0; x < line.length(); x++) {
                     tiles.add(new Grass(x * GloVariables.CELL_SIZE, y * GloVariables.CELL_SIZE));
@@ -90,6 +94,21 @@ public class board {
                             break;
                         case 'p':
                             setPlayer(new Player(x * GloVariables.CELL_SIZE, y * GloVariables.CELL_SIZE));
+                            break;
+                        case '*':
+                            tiles.add(new Brick(x * GloVariables.CELL_SIZE, y * GloVariables.CELL_SIZE, -1));
+                            break;
+                        case 'x':
+                            tiles.add(new Brick(x * GloVariables.CELL_SIZE, y * GloVariables.CELL_SIZE, 0));
+                            break;
+                        case 'f':
+                            tiles.add(new Brick(x * GloVariables.CELL_SIZE, y * GloVariables.CELL_SIZE, 1));
+                            break;
+                        case 'b':
+                            tiles.add(new Brick(x * GloVariables.CELL_SIZE, y * GloVariables.CELL_SIZE, 2));
+                            break;
+                        case 's':
+                            tiles.add(new Brick(x * GloVariables.CELL_SIZE, y * GloVariables.CELL_SIZE, 3));
                             break;
                     }
                 }
@@ -121,6 +140,14 @@ public class board {
     public static void setPlayer(Player p) {
         player = p;
         addEntityToGame(player);
+    }
+
+    public static Player getPlayer() {
+        return player;
+    }
+
+    public static Vector<Balloon> getBalloons() {
+        return balloons;
     }
 
 }

@@ -8,7 +8,7 @@ import BomberGame.Render;
 public class Tile extends Entity {
     boolean remove = false;
     BounderBox bounderBox;
-    Tile(int x, int y) {
+    public Tile(int x, int y) {
         positionX = x;
         positionY = y;
         width = 16;

@@ -14,11 +14,19 @@ public abstract class Entity {
     public Sprite sprite;
     public BounderBox bounderBox;
 
+    public Entity(int x, int y) {}
+
+    public Entity() {
+
+    }
+
     abstract public boolean isCollideEntity(Entity b);
 
     abstract public boolean isCollidePlayer();
 
     abstract public void render();
+
+    public abstract void die();
 
     abstract public boolean remove();
 
