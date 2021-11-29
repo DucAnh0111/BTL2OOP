@@ -27,11 +27,9 @@ public class InputManage {
  */
         if (keyInputs.contains(KeyCode.UP)) {
             player.move(player.step, Direction.UP);
-            System.out.println("move up");
         }
         if (keyInputs.contains(KeyCode.DOWN)) {
             player.move(player.step, Direction.DOWN);
-            System.out.println("move down");
 
         }
         if (keyInputs.contains(KeyCode.LEFT)) {
@@ -39,7 +37,6 @@ public class InputManage {
                 GloVariables.CameraMoving = true;
             }
             player.move(player.step, Direction.LEFT);
-            System.out.println("move left");
 
         }
         if (keyInputs.contains(KeyCode.RIGHT)) {
@@ -47,7 +44,7 @@ public class InputManage {
                 GloVariables.CameraMoving = true;
             }
             player.move(player.step, Direction.RIGHT);
-            System.out.println("move right");
+
 
         }
 

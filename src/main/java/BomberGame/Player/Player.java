@@ -6,6 +6,7 @@ import BomberGame.Entity.BombAndFlame.Bomb;
 import BomberGame.Entity.BombAndFlame.Flame;
 import BomberGame.Entity.Bounder.BounderBox;
 import BomberGame.Entity.Enemy.Balloon;
+import BomberGame.Entity.Enemy.Oneal;
 import BomberGame.Entity.Entity;
 import BomberGame.Entity.Move;
 import BomberGame.Entity.PowerUp.BombUp;
@@ -13,6 +14,7 @@ import BomberGame.Entity.PowerUp.FlameUp;
 import BomberGame.Entity.PowerUp.SpeedUp;
 import BomberGame.Entity.Tiles.Brick;
 import BomberGame.Entity.Tiles.Portal;
+import BomberGame.Entity.Tiles.Tile;
 import BomberGame.Entity.Tiles.Wall;
 import BomberGame.GloVariables.Direction;
 import BomberGame.GloVariables.GloVariables;
@@ -64,8 +66,12 @@ public class Player extends Move {
 
     @Override
     public boolean isCollideEntity(Entity b) {
-        BounderBox otherEntityBoundary = b.getBoundingBox();
-        return bounderBox.checkCollision(otherEntityBoundary);
+        int distanceX = Math.abs(positionX - b.positionX);
+        int distanceY = Math.abs(positionY - b.positionY);
+        if(distanceX < 48 && distanceY < 48) {
+            return true;
+        }
+        return false;
     }
 
     public void render() {
@@ -86,14 +92,39 @@ public class Player extends Move {
         dieTime = new Date();
     }
 
+    private boolean checkCanMove(int positionX, int positionY) {
+        for(Tile b: board.getTiles()) {
+            if(b instanceof Wall || b instanceof Brick) {
+                int distanceX = Math.abs(positionX - b.positionX);
+                int distanceY = Math.abs(positionY - b.positionY);
+                if(distanceX < 48 && distanceY < 48) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    //Player không thể di chuyển khi không thỏa mãn điều kiện về tọa độ
+    //=> Từ đó dẫn tới trường hợp sai khác nhỏ(~4,~8) không thể di chuyển, mặc dù trên hình khó nhận ra
+    //=> Viết hàm để có thể bù được tọa độ sai khác ít, dẫn đến việc game vận hành trơn chu hơn
+    /*    private void fixCoordinates(int posX, int posY) {
+        for(int i = 0; i< 31;i++) {
+            if((Math.abs(48*i - posX)) < 4) {
+                posX = 48*i;
+            }
+        }
+        for(int j = 0; j< 15;j++) {
+            if((Math.abs(48*j - posX)) < 4) {
+                posX = 48*j;
+            }
+        }
+    }
+     */
+
+
     private boolean checkCollisions(int x, int y) {
-        bounderBox.setPosition(x, y);
         for (Entity e : board.getEntities()) {
-            if (e instanceof Portal && isCollideEntity(e) && board.enemy == 0) {
-                GloVariables.Level = (GloVariables.Level % 4) + 1;
-                GloVariables.NewGame = true;
-                GloVariables.passLevel = true;
-            } else {
                 if (e instanceof FlameUp && isCollideEntity(e)) {
                     Bomb.radius++;
                     ((FlameUp) e).checkCollision(true);
@@ -116,20 +147,10 @@ public class Player extends Move {
                         ((Bomb) e).PlayerCollisionFriendly = false;
                     }
                 }
-                /*
-                if (!(e instanceof Balloon) && e != this && isCollideEntity(e) && !e.isCollidePlayer()) {
-                    bounderBox.setPosition(positionX, positionY);
-                    return true;
+                if ((e instanceof Balloon || e instanceof Oneal) && e != this && isCollideEntity(e) && !e.isCollidePlayer()) {
+                    die();
                 }
-
-                 */
-                if(!(e instanceof Wall && e != this && isCollideEntity(e) && !e.isCollidePlayer())) {
-                    bounderBox.setPosition(positionX, positionY);
-                    return false;
-                }
-            }
         }
-        bounderBox.setPosition(positionX, positionY);
         return false;
     }
 
@@ -170,31 +191,35 @@ public class Player extends Move {
             } else {
                 switch (direction) {
                     case UP:
-                        if (!checkCollisions(positionX, positionY - steps)) {
+                        if (!checkCollisions(positionX, positionY - steps) && checkCanMove(positionX, positionY - steps)) {
                             positionY -= steps;
                             setSprite(playerAnimations.getMoveUpSprite());
                             currentDirection = Direction.UP;
+                            System.out.println(positionX + " and " + positionY);
                         }
                         break;
                     case DOWN:
-                        if (!checkCollisions(positionX, positionY + steps)) {
+                        if (!checkCollisions(positionX, positionY + steps) && checkCanMove(positionX, positionY + steps)) {
                             positionY += steps;
                             setSprite(playerAnimations.getMoveDownSprite());
                             currentDirection = Direction.DOWN;
+                            System.out.println(positionX + " and " + positionY);
                         }
                         break;
                     case LEFT:
-                        if (!checkCollisions(positionX - steps, positionY)) {
+                        if (!checkCollisions(positionX - steps, positionY) && checkCanMove(positionX - steps, positionY)) {
                             positionX -= steps;
                             setSprite(playerAnimations.getMoveLeftSprite());
                             currentDirection = Direction.LEFT;
+                            System.out.println(positionX + " and " + positionY);
                         }
                         break;
                     case RIGHT:
-                        if (!checkCollisions(positionX + steps, positionY)) {
+                        if (!checkCollisions(positionX + steps, positionY) && checkCanMove(positionX + steps, positionY)) {
                             positionX += steps;
                             setSprite(playerAnimations.getMoveRightSprite());
                             currentDirection = Direction.RIGHT;
+                            System.out.println(positionX + " and " + positionY);
                         }
                         break;
                     default:

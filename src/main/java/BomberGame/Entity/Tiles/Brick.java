@@ -4,6 +4,9 @@ import BomberGame.Animations.BrickAnimations;
 import BomberGame.Animations.Sprite;
 import BomberGame.Entity.Bounder.BounderBox;
 import BomberGame.Entity.Entity;
+import BomberGame.Entity.PowerUp.BombUp;
+import BomberGame.Entity.PowerUp.FlameUp;
+import BomberGame.Entity.PowerUp.SpeedUp;
 import BomberGame.GloVariables.GloVariables;
 import BomberGame.Render;
 import BomberGame.Sence.board;
@@ -73,12 +76,6 @@ public class Brick extends Tile {
         destroyedTime = new Date();
     }
 
-    @Override
-    public boolean remove() {
-        return false;
-    }
-
-    /*
     public boolean remove() {
         if (disappear) {
             switch (items) {
@@ -86,19 +83,19 @@ public class Brick extends Tile {
                     board.addEntityToGame(new Portal(positionX, positionY));
                     break;
                 case 1:
-                    board.addEntityToGame(new FlamePowerup(positionX, positionY));
+                    board.addEntityToGame(new FlameUp(positionX, positionY));
                     break;
                 case 2:
-                    board.addEntityToGame(new BombPowerup(positionX, positionY));
+                    board.addEntityToGame(new BombUp(positionX, positionY));
                     break;
                 case 3:
-                    board.addEntityToGame(new SpeedPowerup(positionX, positionY));
+                    board.addEntityToGame(new SpeedUp(positionX, positionY));
                     break;
             }
         }
         return disappear;
     }
-     */
+
 
     public boolean isCollideEntity(Entity e) {
         BounderBox rect = e.getBoundingBox();
@@ -109,5 +106,4 @@ public class Brick extends Tile {
     public boolean isCollidePlayer() {
         return false;
     }
-
 }

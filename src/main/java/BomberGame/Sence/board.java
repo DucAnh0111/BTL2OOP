@@ -45,6 +45,7 @@ public class board {
     public static Vector<Entity> getEntities() {
         return entities;
     }
+    public static Vector<Tile> getTiles() { return tiles;}
 
     static Comparator<Entity> layerComparator = (o1, o2) -> {
         return Integer.compare(o1.getLayer(), o2.getLayer());
@@ -60,6 +61,14 @@ public class board {
         }
     }
 
+    public static void toStr() {
+        for(Tile e:tiles) {
+            if(e instanceof Wall || e instanceof Brick) {
+                System.out.println(e.positionX  + "and" + e.positionY);
+            }
+        }
+    }
+
     private static void init() {
         root = new Group();
         scene = new Scene(root, GloVariables.SCENE_WIDTH, GloVariables.SCENE_HEIGHT);
@@ -72,6 +81,7 @@ public class board {
         //load map
         try {
             loadMap();
+            board.toStr();
         } catch (IOException e) {
             System.err.println("Unable to load map");
         }

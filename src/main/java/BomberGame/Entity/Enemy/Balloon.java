@@ -7,6 +7,7 @@ import BomberGame.Entity.BombAndFlame.Flame;
 import BomberGame.Entity.Bounder.BounderBox;
 import BomberGame.Entity.Entity;
 import BomberGame.Entity.Move;
+import BomberGame.Entity.Tiles.Wall;
 import BomberGame.GloVariables.Direction;
 import BomberGame.GloVariables.GloVariables;
 import BomberGame.Render;
@@ -116,6 +117,9 @@ public class Balloon extends Move {
                 checkCollision = true;
                 bounderBox.setEnemyPosition(positionX, positionY);
                 return true;
+            }
+            if(e instanceof Wall) {
+                return false;
             }
 
         }
