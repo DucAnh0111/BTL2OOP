@@ -65,29 +65,6 @@ public class Balloon extends Move {
         return bounderBox.checkCollision(temp);
     }
 
-    public void RandomMoving() {
-        int direction;
-        if ((positionX % 48 == 0 && positionY % 48 == 0) || ((positionY + 2) % 48 == 0) || ((positionX + 2) % 48 == 0) ||
-                ((positionX - 8) % 48 == 0)||((positionX + 10) % 48 == 0) || ((positionY + 10) % 48 == 0)) {
-            direction = random.nextInt(4);
-            dir = direction;
-        }
-        switch (dir) {
-            case 0:
-                move(step, Direction.UP);
-                break;
-            case 1:
-                move(step, Direction.DOWN);
-                break;
-            case 2:
-                move(step, Direction.LEFT);
-                break;
-            case 3:
-                move(step, Direction.RIGHT);
-                break;
-        }
-    }
-
     public void render() {
         if (sprite != null && isAlive()) {
             Render.playAnimation(sprite);

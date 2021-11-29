@@ -20,13 +20,11 @@ import BomberGame.GloVariables.Direction;
 import BomberGame.GloVariables.GloVariables;
 import BomberGame.Render;
 import BomberGame.Sence.board;
-
-
 import java.util.Date;
 
 public class Player extends Move {
     public static int step = 4;
-    public static int bombCount = 1;
+    public static int bombCount = 5;
     boolean isAlive = true;
     boolean disappear = false;
     Date dieTime;
@@ -132,10 +130,6 @@ public class Player extends Move {
                 if (e instanceof BombUp && isCollideEntity(e)) {
                     bombCount++;
                     ((BombUp) e).checkCollision(true);
-                }
-                if (e instanceof SpeedUp && isCollideEntity(e)) {
-                    step++;
-                    ((SpeedUp) e).checkCollision(true);
                 }
                 if (e instanceof Bomb) {
                     boolean bol1 = Math.abs(this.getPositionY() - e.getPositionY()) < 42;

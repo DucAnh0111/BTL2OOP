@@ -81,15 +81,18 @@ public class Brick extends Tile {
             switch (items) {
                 case 0:
                     board.addEntityToGame(new Portal(positionX, positionY));
+                    board.removeBrick(positionX,positionY);
                     break;
                 case 1:
                     board.addEntityToGame(new FlameUp(positionX, positionY));
+                    board.removeBrick(positionX,positionY);
                     break;
                 case 2:
                     board.addEntityToGame(new BombUp(positionX, positionY));
+                    board.removeBrick(positionX,positionY);
                     break;
-                case 3:
-                    board.addEntityToGame(new SpeedUp(positionX, positionY));
+                default:
+                    board.removeBrick(positionX,positionY);
                     break;
             }
         }

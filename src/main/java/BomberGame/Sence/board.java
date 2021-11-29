@@ -38,7 +38,7 @@ public class board {
         sceneStarted = false;
     }
 
-    static Vector<Tile> tiles = new Vector<>();
+    public static Vector<Tile> tiles = new Vector<>();
     static Vector<Entity> entities = new Vector<>();
     static Vector<Balloon> balloons = new Vector<>();
 
@@ -62,8 +62,9 @@ public class board {
     }
 
     public static void toStr() {
-        for(Tile e:tiles) {
-            if(e instanceof Wall || e instanceof Brick) {
+        System.out.println("Coodiner of Ballloons");
+        for(Balloon e: balloons) {
+            if(e instanceof Balloon) {
                 System.out.println(e.positionX  + "and" + e.positionY);
             }
         }
@@ -169,6 +170,16 @@ public class board {
 
     public static Vector<Balloon> getBalloons() {
         return balloons;
+    }
+
+    public static void removeBrick(int x, int y) {
+        for(Tile t : tiles) {
+            if(t instanceof Brick) {
+                if((t.positionX == x) && (t.positionY == y)){
+                    tiles.remove(t);
+                }
+            }
+        }
     }
 
 }

@@ -80,6 +80,9 @@ public class Bomb extends Entity {
             if (!exploded) {
                 exploded = true;
                 sprite = bomb_animations.getGrass();
+
+ //               board.tiles = board.removeBrick(sprite.getXPosition(),sprite.getYPosition());
+
             }
             if (exploded) {
                 return STATE.INACTIVE;
