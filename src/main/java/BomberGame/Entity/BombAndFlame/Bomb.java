@@ -14,7 +14,6 @@ public class Bomb extends Entity {
     public static int radius = 1;
     public boolean CollidedPlayer = false;
     public boolean PlayerCollisionFriendly = true;
-
     int timerDurationInMillis = 2000;
 
     boolean exploded = false;
@@ -80,9 +79,7 @@ public class Bomb extends Entity {
             if (!exploded) {
                 exploded = true;
                 sprite = bomb_animations.getGrass();
-
- //               board.tiles = board.removeBrick(sprite.getXPosition(),sprite.getYPosition());
-
+                board.removeBrick(sprite.getXPosition(),sprite.getYPosition());
             }
             if (exploded) {
                 return STATE.INACTIVE;

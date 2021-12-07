@@ -19,10 +19,6 @@ public class InputManage {
         Player player = board.getPlayer();
         Vector<Balloon> balloons = board.getBalloons();
 
-        if (keyInputs.contains(KeyCode.A)) {
-            board.toStr();
-        }
-
         if (keyInputs.contains(KeyCode.UP)) {
             player.move(player.step, Direction.UP);
         }
@@ -65,9 +61,11 @@ public class InputManage {
                 board.addEntityToGame(new Bomb((int) c * 48 + 8, (int) e * 48 + 8));
                 player.decrementBombCount();
                 keyInputs.remove(KeyCode.SPACE);
-                System.out.println("set bomb");
             }
         }
 
+        if (keyInputs.contains(KeyCode.A)) {
+            player.move(4,Direction.A);
+        }
     }
 }

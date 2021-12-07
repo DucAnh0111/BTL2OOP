@@ -6,7 +6,6 @@ import BomberGame.Entity.Bounder.BounderBox;
 import BomberGame.Entity.Entity;
 import BomberGame.Entity.PowerUp.BombUp;
 import BomberGame.Entity.PowerUp.FlameUp;
-import BomberGame.Entity.PowerUp.SpeedUp;
 import BomberGame.GloVariables.GloVariables;
 import BomberGame.Render;
 import BomberGame.Sence.board;

@@ -1,12 +1,9 @@
 package BomberGame.Sence;
-
+import BomberGame.Entity.BombAndFlame.Bomb;
 import BomberGame.Entity.Enemy.Balloon;
 import BomberGame.Entity.Enemy.Oneal;
 import BomberGame.Entity.Entity;
-import BomberGame.Entity.Tiles.Brick;
-import BomberGame.Entity.Tiles.Grass;
-import BomberGame.Entity.Tiles.Tile;
-import BomberGame.Entity.Tiles.Wall;
+import BomberGame.Entity.Tiles.*;
 import BomberGame.GameLoop;
 import BomberGame.GloVariables.GloVariables;
 import BomberGame.Player.Player;
@@ -15,6 +12,7 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.TextArea;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -22,7 +20,6 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Vector;
-
 
 public class board {
     static Scene scene;
@@ -47,9 +44,7 @@ public class board {
     }
     public static Vector<Tile> getTiles() { return tiles;}
 
-    static Comparator<Entity> layerComparator = (o1, o2) -> {
-        return Integer.compare(o1.getLayer(), o2.getLayer());
-    };
+    static Comparator<Entity> layerComparator = Comparator.comparingInt(Entity::getLayer);
 
     public static boolean addEntityToGame(Entity e) {
         if (!entities.contains(e)) {
@@ -61,28 +56,16 @@ public class board {
         }
     }
 
-    public static void toStr() {
-        System.out.println("Coodiner of Ballloons");
-        for(Balloon e: balloons) {
-            if(e instanceof Balloon) {
-                System.out.println(e.positionX  + "and" + e.positionY);
-            }
-        }
-    }
-
     private static void init() {
         root = new Group();
-        scene = new Scene(root, GloVariables.SCENE_WIDTH, GloVariables.SCENE_HEIGHT);
+        scene = new Scene(root, GloVariables.SCENE_WIDTH + 48, GloVariables.SCENE_HEIGHT + 48);
         canvas = new Canvas(GloVariables.CANVAS_WIDTH, GloVariables.CANVAS_HEIGHT);
         root.getChildren().add(canvas);
         gc = canvas.getGraphicsContext2D();
-        gc.fillRect(0, 0, GloVariables.CANVAS_WIDTH, GloVariables.CANVAS_HEIGHT);
-
+        gc.fillRect(0,0, GloVariables.CANVAS_WIDTH, GloVariables.CANVAS_HEIGHT);
         GameLoop.start(gc);
-        //load map
         try {
             loadMap();
-            board.toStr();
         } catch (IOException e) {
             System.err.println("Unable to load map");
         }
@@ -90,7 +73,7 @@ public class board {
     }
 
     public static void loadMap() throws IOException {
-        String path = "Resourses/maps/Level2.txt";
+        String path = "Resourses/maps/Level1.txt";
         try (BufferedReader inputStream = new BufferedReader(new FileReader(path))) {
             String line;
             int y = 0;
@@ -126,6 +109,8 @@ public class board {
                         case 's':
                             tiles.add(new Brick(x * CELL_SIZE, y * CELL_SIZE, 3));
                             break;
+                        case 'o':
+                            tiles.add(new Portal(x*CELL_SIZE,y*CELL_SIZE));
                     }
                 }
                 y++;
@@ -151,6 +136,23 @@ public class board {
         }
     }
 
+    public static void NewGame() {
+        entities.clear();
+        balloons.clear();
+        tiles.clear();
+        if (!GloVariables.passLevel) {
+            Player.step = 4;
+            Player.bombCount = 1;
+            Bomb.radius = 1;
+        }
+        try {
+            loadMap();
+        } catch (IOException e) {
+            System.err.println("Unable to load map file.");
+            System.exit(1);
+        }
+    }
+
     public static Scene getScene() {
         return scene;
     }
@@ -171,6 +173,8 @@ public class board {
     public static Vector<Balloon> getBalloons() {
         return balloons;
     }
+
+
 
     public static void removeBrick(int x, int y) {
         for(Tile t : tiles) {

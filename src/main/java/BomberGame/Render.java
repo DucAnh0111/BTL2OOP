@@ -18,17 +18,18 @@ public class Render {
     }
 
     public static void playAnimation(Sprite sprite) {
+        double time = GameLoop.getCurrentTime();
         GraphicsContext gc = board.getGraphicsContext();
         if (sprite.hasSpriteArrayImages) {
             playAnimation(sprite.spriteImages, sprite.playSpeed, sprite.getXPosition(), sprite.getYPosition(), sprite.width * sprite.getScale(), sprite.height * sprite.getScale());
         } else {
-            playAnimation(gc,0, sprite.actualSize, sprite.spriteLocationOnSheetX, sprite.spriteLocationOnSheetY,
+            playAnimation(gc,time, sprite.actualSize, sprite.spriteLocationOnSheetX, sprite.spriteLocationOnSheetY,
                     sprite.numberOfFrames, sprite.getXPosition(), sprite.getYPosition(), sprite.width, sprite.height, sprite.getScale(), sprite.playSpeed);
         }
     }
 
     public static void playAnimation(Image[] images, double speed, int x, int y, double w, double h) {
-        double time = 0;
+        double time = GameLoop.getCurrentTime();
         GraphicsContext gc = board.getGraphicsContext();
         int numberOfFrames = images.length;
         int index = CurrentFrame(time, numberOfFrames, speed);

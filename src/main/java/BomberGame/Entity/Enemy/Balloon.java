@@ -22,19 +22,17 @@ public class Balloon extends Move {
     boolean disappear = false;
     boolean checkCollision = false;
     public int step;
-
     Random random = new Random();
     Date dieTime;
-    BalloonAnimations balloomAnimations;
+    BalloonAnimations balloonAnimations;
     Direction currentDirection;
-
-    public Balloon() {}
 
     public Balloon(int x, int y) {
         init(x, y);
-        balloomAnimations = new BalloonAnimations(this, scale);
-        sprite = balloomAnimations.getIdle();
+        balloonAnimations = new BalloonAnimations(this, scale);
+        sprite = balloonAnimations.getIdle();
         step = 2;
+
     }
 
     public void init(int x, int y) {
@@ -67,10 +65,10 @@ public class Balloon extends Move {
 
     public void render() {
         if (sprite != null && isAlive()) {
-            Render.playAnimation(sprite);
+            Render.playAnimation(balloonAnimations.getBalloon());
         }
         if (!isAlive()) {
-            Render.playAnimation(balloomAnimations.getDie());
+            Render.playAnimation(balloonAnimations.getDie());
             if (new Date().getTime() > (600 + dieTime.getTime())) {
                 disappear = true;
             }
@@ -122,40 +120,40 @@ public class Balloon extends Move {
     public void move(int steps, Direction direction) {
         if (isAlive) {
             if (steps == 0) {
-                setCurrentSprite(balloomAnimations.getIdle());
+                setCurrentSprite(balloonAnimations.getIdle());
                 return;
             } else {
                 switch (direction) {
                     case UP:
                         if (!checkCollisions(positionX, positionY - steps)) {
                             positionY -= steps;
-                            setCurrentSprite(balloomAnimations.getBalloon());
+                            setCurrentSprite(balloonAnimations.getBalloon());
                             currentDirection = Direction.UP;
                         }
                         break;
                     case DOWN:
                         if (!checkCollisions(positionX, positionY + steps)) {
                             positionY += steps;
-                            setCurrentSprite(balloomAnimations.getBalloon());
+                            setCurrentSprite(balloonAnimations.getBalloon());
                             currentDirection = Direction.DOWN;
                         }
                         break;
                     case LEFT:
                         if (!checkCollisions(positionX - steps, positionY)) {
                             positionX -= steps;
-                            setCurrentSprite(balloomAnimations.getBalloon());
+                            setCurrentSprite(balloonAnimations.getBalloon());
                             currentDirection = Direction.LEFT;
                         }
                         break;
                     case RIGHT:
                         if (!checkCollisions(positionX + steps, positionY)) {
                             positionX += steps;
-                            setCurrentSprite(balloomAnimations.getBalloon());
+                            setCurrentSprite(balloonAnimations.getBalloon());
                             currentDirection = Direction.RIGHT;
                         }
                         break;
                     default:
-                        setCurrentSprite(balloomAnimations.getIdle());
+                        setCurrentSprite(balloonAnimations.getIdle());
                 }
             }
         }

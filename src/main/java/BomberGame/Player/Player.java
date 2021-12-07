@@ -1,5 +1,4 @@
 package BomberGame.Player;
-
 import BomberGame.Animations.PlayerAnimations;
 import BomberGame.Animations.Sprite;
 import BomberGame.Entity.BombAndFlame.Bomb;
@@ -11,7 +10,6 @@ import BomberGame.Entity.Entity;
 import BomberGame.Entity.Move;
 import BomberGame.Entity.PowerUp.BombUp;
 import BomberGame.Entity.PowerUp.FlameUp;
-import BomberGame.Entity.PowerUp.SpeedUp;
 import BomberGame.Entity.Tiles.Brick;
 import BomberGame.Entity.Tiles.Portal;
 import BomberGame.Entity.Tiles.Tile;
@@ -24,7 +22,7 @@ import java.util.Date;
 
 public class Player extends Move {
     public static int step = 4;
-    public static int bombCount = 5;
+    public static int bombCount = 1;
     boolean isAlive = true;
     boolean disappear = false;
     Date dieTime;
@@ -90,6 +88,10 @@ public class Player extends Move {
         dieTime = new Date();
     }
 
+    public void teleport() {
+
+    }
+
     private boolean checkCanMove(int positionX, int positionY) {
         for(Tile b: board.getTiles()) {
             if(b instanceof Wall || b instanceof Brick) {
@@ -103,50 +105,35 @@ public class Player extends Move {
         return true;
     }
 
-    //Player không thể di chuyển khi không thỏa mãn điều kiện về tọa độ
-    //=> Từ đó dẫn tới trường hợp sai khác nhỏ(~4,~8) không thể di chuyển, mặc dù trên hình khó nhận ra
-    //=> Viết hàm để có thể bù được tọa độ sai khác ít, dẫn đến việc game vận hành trơn chu hơn
-    /*    private void fixCoordinates(int posX, int posY) {
-        for(int i = 0; i< 31;i++) {
-            if((Math.abs(48*i - posX)) < 4) {
-                posX = 48*i;
-            }
-        }
-        for(int j = 0; j< 15;j++) {
-            if((Math.abs(48*j - posX)) < 4) {
-                posX = 48*j;
-            }
-        }
-    }
-     */
-
-
     private boolean checkCollisions(int x, int y) {
         for (Entity e : board.getEntities()) {
-                if (e instanceof FlameUp && isCollideEntity(e)) {
-                    Bomb.radius++;
+            if (e instanceof Portal && isCollideEntity(e)) {
+
+            } else {
+                if (e instanceof FlameUp  && isCollideEntity(e)) {
+                    Bomb.radius ++;
                     ((FlameUp) e).checkCollision(true);
                 }
                 if (e instanceof BombUp && isCollideEntity(e)) {
                     bombCount++;
                     ((BombUp) e).checkCollision(true);
                 }
+
                 if (e instanceof Bomb) {
                     boolean bol1 = Math.abs(this.getPositionY() - e.getPositionY()) < 42;
                     boolean bol2 = Math.abs(this.getPositionX() - e.getPositionX()) < 42;
                     if (bol1 && bol2 && ((Bomb) e).CollidedPlayer == false && e.isCollidePlayer() == true) {
                         ((Bomb) e).CollidedPlayer = true;
                     }
-                    if (!bol1 || !bol2 && ((Bomb) e).CollidedPlayer == true) {
-                        ((Bomb) e).PlayerCollisionFriendly = false;
-                    }
                 }
                 if ((e instanceof Balloon || e instanceof Oneal) && e != this && isCollideEntity(e) && !e.isCollidePlayer()) {
                     die();
                 }
+            }
         }
+        bounderBox.setPosition(positionX, positionY);
         return false;
-    }
+        }
 
     public boolean remove() {
         if (isAlive) {
@@ -176,6 +163,7 @@ public class Player extends Move {
         return false;
     }
 
+
     public void move(int steps, Direction direction) {
         if (isAlive) {
             if (steps == 0) {
@@ -189,7 +177,6 @@ public class Player extends Move {
                             positionY -= steps;
                             setSprite(playerAnimations.getMoveUpSprite());
                             currentDirection = Direction.UP;
-                            System.out.println(positionX + " and " + positionY);
                         }
                         break;
                     case DOWN:
@@ -197,7 +184,6 @@ public class Player extends Move {
                             positionY += steps;
                             setSprite(playerAnimations.getMoveDownSprite());
                             currentDirection = Direction.DOWN;
-                            System.out.println(positionX + " and " + positionY);
                         }
                         break;
                     case LEFT:
@@ -205,7 +191,6 @@ public class Player extends Move {
                             positionX -= steps;
                             setSprite(playerAnimations.getMoveLeftSprite());
                             currentDirection = Direction.LEFT;
-                            System.out.println(positionX + " and " + positionY);
                         }
                         break;
                     case RIGHT:
@@ -213,7 +198,6 @@ public class Player extends Move {
                             positionX += steps;
                             setSprite(playerAnimations.getMoveRightSprite());
                             currentDirection = Direction.RIGHT;
-                            System.out.println(positionX + " and " + positionY);
                         }
                         break;
                     default:
@@ -244,4 +228,5 @@ public class Player extends Move {
     public void decrementBombCount() {
         bombCount--;
     }
+
 }

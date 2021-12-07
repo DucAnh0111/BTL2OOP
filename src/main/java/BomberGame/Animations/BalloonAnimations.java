@@ -17,16 +17,14 @@ public class BalloonAnimations {
         Image img = Render.getMainSheet();
         playSpeed = 0.18;
 
-        List<Rectangle> Ballom = new ArrayList<>();
+        List<Rectangle> Balloon = new ArrayList<>();
         List<Rectangle> Die = new ArrayList<>();
 
-        Ballom.add(new Rectangle(1,123,16,16));
-        Ballom.add(new Rectangle(31,123,16,16));
-        Ballom.add(new Rectangle(61,123,16,16));
-        balloon = new Sprite(e,16,playSpeed,img,Ballom,16,16,scale);
+        Balloon.add(new Rectangle(1,123,16,16));
+        Balloon.add(new Rectangle(31,123,16,16));
+        Balloon.add(new Rectangle(61,123,16,16));
+        balloon = new Sprite(e,16,playSpeed,img,Balloon,16,16,scale);
         idle = new Sprite(e,16,playSpeed,1,123,1,16,16,scale);
-
-
         Die.add(new Rectangle(91,123,16,16));
         Die.add(new Rectangle(1,153,16,16));
         Die.add(new Rectangle(31,153,16,16));

@@ -1,9 +1,9 @@
 package BomberGame;
 import BomberGame.Entity.BombAndFlame.Bomb;
 import BomberGame.Entity.BombAndFlame.Flame;
+import BomberGame.Entity.Enemy.Balloon;
+import BomberGame.Entity.Enemy.Oneal;
 import BomberGame.Entity.Entity;
-import BomberGame.Entity.Tiles.Brick;
-import BomberGame.Entity.Tiles.Tile;
 import BomberGame.GameController.InputManage;
 import BomberGame.GloVariables.GloVariables;
 import BomberGame.Player.Player;
@@ -32,20 +32,16 @@ public class GameLoop {
         }.start();
     }
 
-    public static void toStr() {
-        Vector<Tile> tiles = board.getTiles();
-        for(Tile t : tiles) {
-            if(t instanceof Brick) {
-                System.out.println(t.positionX + " and " + t.positionY);
-            }
-        }
-    }
-
     public static void updateGame() {
         InputManage.handlePlayerMovements();
         Vector<Entity> entities = board.getEntities();
-        Vector<Tile> tiles = board.getTiles();
         Player player = board.getPlayer();
+        if (GloVariables.NewGame) {
+            board.NewGame();
+            GloVariables.NewGame = false;
+            GloVariables.passLevel = false;
+        }
+
         for (int i = 0; i < entities.size(); ++i) {
             if (GloVariables.CameraMoving) {
                 entities.elementAt(i).setOffset();
@@ -60,6 +56,7 @@ public class GameLoop {
                         player.incrementBombCount();
                     }
                 }
+
             } catch (ArrayIndexOutOfBoundsException e) {
             }
         }
