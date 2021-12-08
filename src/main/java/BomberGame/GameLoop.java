@@ -56,7 +56,6 @@ public class GameLoop {
                         player.incrementBombCount();
                     }
                 }
-
             } catch (ArrayIndexOutOfBoundsException e) {
             }
         }

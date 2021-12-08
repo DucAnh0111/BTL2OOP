@@ -1,16 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<?import javafx.scene.control.Button?>
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="BomberGame.HelloController">
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
-
-    <Label fx:id="welcomeText"/>
-    <Button text="Hello!" onAction="#onHelloButtonClick"/>
-</VBox>
+<AnchorPane accessibleRole="IMAGE_VIEW" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="321.0" prefWidth="571.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BomberGame.BombermanMain">
+   <cursor>
+      <Cursor fx:constant="SE_RESIZE" />
+   </cursor>
+   <children>
+      <ImageView depthTest="ENABLE" fitHeight="321.0" fitWidth="571.0" pickOnBounds="true" smooth="false">
+         <image>
+            <Image url="C:\Users\admin\Desktop\BTLSo2\BTL2OOP\Resourses\img\anhnen.jpg" />
+         </image>
+      </ImageView>
+      <VBox prefHeight="338.0" prefWidth="225.0">
+         <children>
+            <Button fx:id="buttonNewGame" blendMode="OVERLAY" mnemonicParsing="false" onAction="#NewGame" prefHeight="50.0" prefWidth="231.0" text="NEWGAME" textFill="RED">
+               <font>
+                  <Font name="System Bold Italic" size="22.0" />
+               </font>
+            </Button>
+            <Button fx:id="buttonContinue" blendMode="OVERLAY" mnemonicParsing="false" onAction="#continueGame" prefHeight="50.0" prefWidth="231.0" text="CONTINUE" textFill="#f80000">
+               <font>
+                  <Font name="System Bold Italic" size="22.0" />
+               </font>
+            </Button>
+            <Button fx:id="buttonGuide" blendMode="SOFT_LIGHT" mnemonicParsing="false" onAction="#guide" prefHeight="50.0" prefWidth="235.0" text="GUIDE" textFill="#0d0c5e">
+               <font>
+                  <Font name="System Bold Italic" size="22.0" />
+               </font>
+            </Button>
+            <Button fx:id="buttonInfo" blendMode="SOFT_LIGHT" mnemonicParsing="false" onAction="#info" prefHeight="50.0" prefWidth="237.0" text="INFORMATION" textFill="#0d1246">
+               <font>
+                  <Font name="System Bold Italic" size="22.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

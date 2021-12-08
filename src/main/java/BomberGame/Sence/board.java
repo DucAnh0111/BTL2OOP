@@ -12,7 +12,12 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -24,13 +29,16 @@ import java.util.Vector;
 public class board {
     static Scene scene;
     static Group root;
+    static AnchorPane anchorPane;
     static Canvas canvas;
     static GraphicsContext gc;
     static boolean sceneStarted;
     public static int enemy;
     static Player player;
     static int CELL_SIZE = GloVariables.CELL_SIZE;
-
+    static Button buttonPAUSE = new Button("PAUSE");
+    static TextArea point;
+    static TextArea Alive;
     static {
         sceneStarted = false;
     }
@@ -58,9 +66,10 @@ public class board {
 
     private static void init() {
         root = new Group();
-        scene = new Scene(root, GloVariables.SCENE_WIDTH + 48, GloVariables.SCENE_HEIGHT + 48);
+        scene = new Scene(root, GloVariables.SCENE_WIDTH, GloVariables.SCENE_HEIGHT);
         canvas = new Canvas(GloVariables.CANVAS_WIDTH, GloVariables.CANVAS_HEIGHT);
         root.getChildren().add(canvas);
+
         gc = canvas.getGraphicsContext2D();
         gc.fillRect(0,0, GloVariables.CANVAS_WIDTH, GloVariables.CANVAS_HEIGHT);
         GameLoop.start(gc);
@@ -69,6 +78,7 @@ public class board {
         } catch (IOException e) {
             System.err.println("Unable to load map");
         }
+
         Event.attachEventHandlers(scene);
     }
 

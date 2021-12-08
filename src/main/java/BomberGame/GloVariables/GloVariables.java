@@ -2,7 +2,7 @@ package BomberGame.GloVariables;
 public class GloVariables {
 
     public static int SCENE_WIDTH = 960;
-    public static int SCENE_HEIGHT = 624;
+    public static int SCENE_HEIGHT = 624 + 48;
     public static int CELL_SIZE = 48;
     public static int CANVAS_WIDTH = 960;
     public static int CANVAS_HEIGHT = 624;
