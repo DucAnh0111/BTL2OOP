@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Scene?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<fx:root type="Scene" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="BomberGame.Sence.board">
+    <AnchorPane prefHeight="411.0" prefWidth="412.0" />
+</fx:root>

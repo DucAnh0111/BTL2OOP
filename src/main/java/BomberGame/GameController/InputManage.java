@@ -38,8 +38,6 @@ public class InputManage {
                 GloVariables.CameraMoving = true;
             }
             player.move(player.step, Direction.RIGHT);
-
-
         }
 
         if (!keyInputs.contains(KeyCode.RIGHT) &&

@@ -1,8 +1,6 @@
 package BomberGame;
 import BomberGame.Entity.BombAndFlame.Bomb;
 import BomberGame.Entity.BombAndFlame.Flame;
-import BomberGame.Entity.Enemy.Balloon;
-import BomberGame.Entity.Enemy.Oneal;
 import BomberGame.Entity.Entity;
 import BomberGame.GameController.InputManage;
 import BomberGame.GloVariables.GloVariables;
@@ -10,16 +8,18 @@ import BomberGame.Player.Player;
 import BomberGame.Sence.board;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.stage.Stage;
+
 import java.util.Vector;
 
 public class GameLoop {
+
     static double currentTime;
     static double prevTime;
     final static long startTime = System.nanoTime();
     public static double getCurrentTime() {
         return currentTime;
     }
-
     public static void start(GraphicsContext gc) {
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
@@ -41,7 +41,6 @@ public class GameLoop {
             GloVariables.NewGame = false;
             GloVariables.passLevel = false;
         }
-
         for (int i = 0; i < entities.size(); ++i) {
             if (GloVariables.CameraMoving) {
                 entities.elementAt(i).setOffset();
@@ -60,18 +59,21 @@ public class GameLoop {
             }
         }
     }
-        public static void renderGame() {
-            Vector<Entity> entities = board.getEntities();
-            for (int i = 0; i < entities.size(); ++i) {
-                Entity e = entities.elementAt(i);
-                if (e instanceof Flame) {
-                    if (((Flame) e).getFlameState()) {
-                        e.render();
-                    }
-                } else {
+
+
+    public static void renderGame() {
+        Vector<Entity> entities = board.getEntities();
+        for (int i = 0; i < entities.size(); ++i) {
+            Entity e = entities.elementAt(i);
+            if (e instanceof Flame) {
+                if (((Flame) e).getFlameState()) {
                     e.render();
                 }
+            } else {
+                e.render();
             }
         }
     }
+
+}
 

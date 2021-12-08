@@ -184,8 +184,6 @@ public class board {
         return balloons;
     }
 
-
-
     public static void removeBrick(int x, int y) {
         for(Tile t : tiles) {
             if(t instanceof Brick) {

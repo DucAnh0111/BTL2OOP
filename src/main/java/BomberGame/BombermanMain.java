@@ -1,20 +1,13 @@
 package BomberGame;
 
-import BomberGame.GameController.Audio;
+import BomberGame.GameController.Sound;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import BomberGame.GloVariables.GloVariables;
 import BomberGame.Sence.board;
@@ -33,7 +26,7 @@ public class BombermanMain extends Application {
 
     public void newGame() {
         Stage stage = new Stage();
-        Audio.ThemeMusic();
+        Sound.play("Theme");
         stage.setTitle(GloVariables.GAME_NAME);
         board.setupScene();
         Scene s = board.getScene();
@@ -49,19 +42,27 @@ public class BombermanMain extends Application {
     Button buttonNewGame;
     @FXML
     Button buttonContinue;
-
     @FXML
     Button buttonGuide;
-
     @FXML
     Button buttonInfo;
+    @FXML
+    Button hightcore;
 
     @FXML
     ImageView myImageview;
 
+    @FXML
+    TextField tf1;
+
+    @FXML
+    TextField tf2;
+
     public void NewGame() {
         System.out.println("new game");
         newGame();
+        tf1.setVisible(false);
+        tf2.setVisible(false);
     }
 
     public void continueGame() {
@@ -70,9 +71,13 @@ public class BombermanMain extends Application {
 
     public void guide() {
         System.out.println("guide");
+        tf1.setVisible(true);
+        tf2.setVisible(false);
     }
 
     public void info() {
+        tf1.setVisible(false);
+        tf2.setVisible(true);
         System.out.println("Information");
     }
 
