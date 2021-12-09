@@ -11,27 +11,52 @@ import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.Vector;
 
 public class GameLoop {
-
     static double currentTime;
     static double prevTime;
     final static long startTime = System.nanoTime();
+
     public static double getCurrentTime() {
         return currentTime;
     }
+
     public static void start(GraphicsContext gc) {
-        Sound.play("Theme");
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
                 prevTime = currentTime;
                 currentTime = (currentNanoTime - startTime) / (1000000000.0);
                 gc.clearRect(0, 0, GloVariables.CANVAS_WIDTH, GloVariables.CANVAS_WIDTH);
+                if(board.enemy == 3) {
+                    System.out.println("nextlever");
+                    GloVariables.Level ++;
+                    Sound.play("passlevel");
+                    nextLever();
+                }
                 updateGame();
                 renderGame();
             }
         }.start();
+    }
+
+    public static void nextLever() {
+
+        board.entities.clear();
+        board.balloons.clear();
+        board.tiles.clear();
+        if (!GloVariables.passLevel) {
+            Player.step = 4;
+            Player.bombCount = 1;
+            Bomb.radius = 1;
+        }
+        try {
+            board.loadMap();
+        } catch (IOException e) {
+            System.err.println("Unable to load map file.");
+            System.exit(1);
+        }
     }
 
     public static void updateGame() {

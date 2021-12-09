@@ -30,7 +30,7 @@ public class BombermanMain extends Application {
 
     public void newGame() {
         Stage stage = new Stage();
-
+        Sound.play("Theme");
         stage.setTitle(GloVariables.GAME_NAME);
         board.setupScene();
         Scene s = board.getScene();

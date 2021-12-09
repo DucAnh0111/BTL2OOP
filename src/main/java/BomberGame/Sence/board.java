@@ -44,8 +44,8 @@ public class board {
     }
 
     public static Vector<Tile> tiles = new Vector<>();
-    static Vector<Entity> entities = new Vector<>();
-    static Vector<Balloon> balloons = new Vector<>();
+    public static Vector<Entity> entities = new Vector<>();
+    public static Vector<Balloon> balloons = new Vector<>();
 
     public static Vector<Entity> getEntities() {
         return entities;
@@ -82,7 +82,7 @@ public class board {
     }
 
     public static void loadMap() throws IOException {
-        String path = "Resourses/maps/Level1.txt";
+        String path = "Resourses/maps/Level" + GloVariables.Level +".txt";
         try (BufferedReader inputStream = new BufferedReader(new FileReader(path))) {
             String line;
             int y = 0;
@@ -146,6 +146,7 @@ public class board {
     }
 
     public static void NewGame() {
+
         entities.clear();
         balloons.clear();
         tiles.clear();
