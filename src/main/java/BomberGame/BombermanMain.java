@@ -1,6 +1,8 @@
 package BomberGame;
 
 import BomberGame.GameController.Sound;
+import BomberGame.GloVariables.GloVariables;
+import BomberGame.Sence.board;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,10 +10,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
-import BomberGame.GloVariables.GloVariables;
-import BomberGame.Sence.board;
 
+import java.io.File;
 import java.io.IOException;
 public class BombermanMain extends Application {
 
@@ -22,11 +25,12 @@ public class BombermanMain extends Application {
         stage.setTitle(GloVariables.GAME_NAME);
         stage.setScene(scene);
         stage.show();
+        Sound.play("Theme");
     }
 
     public void newGame() {
         Stage stage = new Stage();
-        Sound.play("Theme");
+
         stage.setTitle(GloVariables.GAME_NAME);
         board.setupScene();
         Scene s = board.getScene();

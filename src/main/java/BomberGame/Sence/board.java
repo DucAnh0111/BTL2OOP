@@ -69,7 +69,6 @@ public class board {
         scene = new Scene(root, GloVariables.SCENE_WIDTH, GloVariables.SCENE_HEIGHT);
         canvas = new Canvas(GloVariables.CANVAS_WIDTH, GloVariables.CANVAS_HEIGHT);
         root.getChildren().add(canvas);
-
         gc = canvas.getGraphicsContext2D();
         gc.fillRect(0,0, GloVariables.CANVAS_WIDTH, GloVariables.CANVAS_HEIGHT);
         GameLoop.start(gc);

@@ -3,6 +3,7 @@ import BomberGame.Entity.BombAndFlame.Bomb;
 import BomberGame.Entity.BombAndFlame.Flame;
 import BomberGame.Entity.Entity;
 import BomberGame.GameController.InputManage;
+import BomberGame.GameController.Sound;
 import BomberGame.GloVariables.GloVariables;
 import BomberGame.Player.Player;
 import BomberGame.Sence.board;
@@ -21,6 +22,7 @@ public class GameLoop {
         return currentTime;
     }
     public static void start(GraphicsContext gc) {
+        Sound.play("Theme");
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
                 prevTime = currentTime;
@@ -51,6 +53,7 @@ public class GameLoop {
                 }
                 if (entities.elementAt(i) instanceof Bomb) {
                     if (entities.elementAt(i).remove()) {
+                        Sound.play("Bombplanted");
                         entities.remove(i);
                         player.incrementBombCount();
                     }
