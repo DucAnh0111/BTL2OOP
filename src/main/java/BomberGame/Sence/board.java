@@ -3,7 +3,6 @@ import BomberGame.Entity.BombAndFlame.Bomb;
 import BomberGame.Entity.Enemy.Balloon;
 import BomberGame.Entity.Enemy.Oneal;
 import BomberGame.Entity.Entity;
-import BomberGame.Entity.Items.immortal;
 import BomberGame.Entity.Tiles.*;
 import BomberGame.GameLoop;
 import BomberGame.GloVariables.GloVariables;
@@ -13,33 +12,29 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Vector;
 
 public class board {
     static Scene scene;
     static Group root;
-    static AnchorPane anchorPane;
     static Canvas canvas;
     static GraphicsContext gc;
     static boolean sceneStarted;
     public static int enemy;
     static Player player;
     static int CELL_SIZE = GloVariables.CELL_SIZE;
-    static Button buttonPAUSE = new Button("PAUSE");
-    static TextArea point;
-    static TextArea Alive;
+    static Label textLEVEL;
+    static Label textPOINT;
+    static Label textNumberOfEnemy;
+
     static {
         sceneStarted = false;
     }
@@ -54,13 +49,10 @@ public class board {
 
     static Comparator<Entity> layerComparator = Comparator.comparingInt(Entity::getLayer);
 
-    public static boolean addEntityToGame(Entity e) {
+    public static void addEntityToGame(Entity e) {
         if (!entities.contains(e)) {
             entities.add(e);
-            Collections.sort(entities, layerComparator);
-            return true;
-        } else {
-            return false;
+            entities.sort(layerComparator);
         }
     }
 
@@ -68,6 +60,25 @@ public class board {
         root = new Group();
         scene = new Scene(root, GloVariables.SCENE_WIDTH, GloVariables.SCENE_HEIGHT);
         canvas = new Canvas(GloVariables.CANVAS_WIDTH, GloVariables.CANVAS_HEIGHT);
+        canvas.setLayoutX(0);
+        canvas.setLayoutY(48);
+        textLEVEL = new Label("LEVEL: " + GloVariables.Level);
+        textLEVEL.setLayoutX(0);
+        textLEVEL.setLayoutY(0);
+        textLEVEL.setFont(Font.font("Bauhaus 93", 32));
+
+        textPOINT = new Label("POINT: " + GloVariables.point);
+        textPOINT.setLayoutX(144);
+        textPOINT.setLayoutY(0);
+        textPOINT.setFont(Font.font("Bauhaus 93", 32));
+
+        textNumberOfEnemy = new Label("Number of Enemy: " + board.enemy);
+        textNumberOfEnemy.setLayoutX(288);
+        textNumberOfEnemy.setLayoutY(0);
+        textNumberOfEnemy.setFont(Font.font("Bauhaus 93", 32));
+
+
+        root.getChildren().addAll(textLEVEL,textPOINT,textNumberOfEnemy);
         root.getChildren().add(canvas);
         gc = canvas.getGraphicsContext2D();
         gc.fillRect(0,0, GloVariables.CANVAS_WIDTH, GloVariables.CANVAS_HEIGHT);
@@ -77,7 +88,6 @@ public class board {
         } catch (IOException e) {
             System.err.println("Unable to load map");
         }
-
         Event.attachEventHandlers(scene);
     }
 
@@ -92,35 +102,16 @@ public class board {
                 for (int x = 0; x < line.length(); x++) {
                     tiles.add(new Grass(x * GloVariables.CELL_SIZE, y * GloVariables.CELL_SIZE));
                     switch (line.charAt(x)) {
-                        case '#':
-                            tiles.add(new Wall(x * CELL_SIZE, y * CELL_SIZE));
-                            break;
-                        case 'p':
-                            setPlayer(new Player(x * CELL_SIZE, y * CELL_SIZE));
-                            break;
-                        case '*':
-                            tiles.add(new Brick(x * CELL_SIZE, y * CELL_SIZE, -1));
-                            break;
-                        case '1':
-                            balloons.add(new Balloon(x * CELL_SIZE, y * CELL_SIZE));
-                            break;
-                        case 'x':
-                            tiles.add(new Brick(x * CELL_SIZE, y * CELL_SIZE, 0));
-                            break;
-                        case 'f':
-                            tiles.add(new Brick(x * CELL_SIZE, y * CELL_SIZE, 1));
-                            break;
-                        case 'b':
-                            tiles.add(new Brick(x * CELL_SIZE, y * CELL_SIZE, 2));
-                            break;
-                        case '2':
-                            balloons.add(new Oneal(x * CELL_SIZE, y * CELL_SIZE));
-                            break;
-                        case 's':
-                            tiles.add(new Brick(x * CELL_SIZE, y * CELL_SIZE, 3));
-                            break;
-                        case 'i':
-                            tiles.add(new Brick(x * CELL_SIZE, y * CELL_SIZE, 4));
+                        case '#' -> tiles.add(new Wall(x * CELL_SIZE, y * CELL_SIZE));
+                        case 'p' -> setPlayer(new Player(x * CELL_SIZE, y * CELL_SIZE));
+                        case '*' -> tiles.add(new Brick(x * CELL_SIZE, y * CELL_SIZE, -1));
+                        case '1' -> balloons.add(new Balloon(x * CELL_SIZE, y * CELL_SIZE));
+                        case 'x' -> tiles.add(new Brick(x * CELL_SIZE, y * CELL_SIZE, 0));
+                        case 'f' -> tiles.add(new Brick(x * CELL_SIZE, y * CELL_SIZE, 1));
+                        case 'b' -> tiles.add(new Brick(x * CELL_SIZE, y * CELL_SIZE, 2));
+                        case '2' -> balloons.add(new Oneal(x * CELL_SIZE, y * CELL_SIZE));
+                        case 's' -> tiles.add(new Brick(x * CELL_SIZE, y * CELL_SIZE, 3));
+                        case 'i' -> tiles.add(new Brick(x * CELL_SIZE, y * CELL_SIZE, 4));
                     }
                 }
                 y++;
@@ -191,8 +182,24 @@ public class board {
         }
     }
 
-    public void loadAutoMap() {
-
+    public static void setTextBoard(int s) {
+        textLEVEL.setText("LEVEL: " + s);
+        textLEVEL.setFont(Font.font("Bauhaus 93", 32));
     }
+
+    public static void setTextPOINT(int s) {
+        textPOINT.setText("POINT: " + s);
+        textPOINT.setFont(Font.font("Bauhaus 93", 32));
+    }
+
+    public static void setTextNumberOfEnemy(int s) {
+        textNumberOfEnemy.setText("Number Of Enemy: " + s);
+        textNumberOfEnemy.setFont(Font.font("Bauhaus 93", 32));
+    }
+
+    public static int getEnemy() {
+        return balloons.size();
+    }
+
 
 }

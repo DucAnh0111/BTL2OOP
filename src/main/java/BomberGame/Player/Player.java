@@ -43,8 +43,8 @@ public class Player extends Move {
         positionX = x;
         positionY = y;
         scale = 2;
-        bounderBox = new BounderBox(positionX + (int) (GloVariables.PLAYER_WIDTH),
-                positionY + (int) (GloVariables.PLAYER_WIDTH),
+        bounderBox = new BounderBox(positionX + GloVariables.PLAYER_WIDTH,
+                positionY + GloVariables.PLAYER_WIDTH,
                 (int) (GloVariables.PLAYER_WIDTH * (getScale() - 0.6)),
                 (int) (GloVariables.PLAYER_HEIGHT * (getScale() - 0.8))
         );
@@ -67,10 +67,7 @@ public class Player extends Move {
     public boolean isCollideEntity(Entity b) {
         int distanceX = Math.abs(positionX - b.positionX);
         int distanceY = Math.abs(positionY - b.positionY);
-        if(distanceX < 48 && distanceY < 48) {
-            return true;
-        }
-        return false;
+        return distanceX < 48 && distanceY < 48;
     }
 
     public void render() {
@@ -91,7 +88,6 @@ public class Player extends Move {
         dieTime = new Date();
     }
 
-    //khi đi vào cổng sẽ tự động dịch chuyển đến vị trí của cổng khác
     public void teleport() {
 
     }
@@ -129,7 +125,7 @@ public class Player extends Move {
                 if (e instanceof Bomb) {
                     boolean bol1 = Math.abs(this.getPositionY() - e.getPositionY()) < 42;
                     boolean bol2 = Math.abs(this.getPositionX() - e.getPositionX()) < 42;
-                    if (bol1 && bol2 && ((Bomb) e).CollidedPlayer == false && e.isCollidePlayer() == true) {
+                    if (bol1 && bol2 && !((Bomb) e).CollidedPlayer && e.isCollidePlayer()) {
                         ((Bomb) e).CollidedPlayer = true;
                     }
                 }
@@ -176,7 +172,6 @@ public class Player extends Move {
             if (steps == 0) {
                 setSprite(playerAnimations.getPlayerIdleSprite());
                 GloVariables.CameraMoving = false;
-                return;
             } else {
                 switch (direction) {
                     case UP:

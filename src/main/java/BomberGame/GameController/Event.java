@@ -19,7 +19,6 @@ public class Event {
         return controllerKeyList;
     }
 }
-
 class keyReleaseHandler implements javafx.event.EventHandler<KeyEvent>{
     public keyReleaseHandler() {
     }

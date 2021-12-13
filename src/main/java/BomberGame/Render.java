@@ -40,9 +40,8 @@ public class Render {
     public static void playAnimation(GraphicsContext gc, double time, int sizeOnSheet, int pointX, int pointY, int numberOfFrames, int x, int y, double width, double height, double scale, double playSpeed) {
         double speed = playSpeed >= 0 ? playSpeed : 0.3;
         int index = CurrentFrame(time, numberOfFrames, speed);
-        int SpriteSheetX = pointX;
         int SpriteSheetY = pointY + index * sizeOnSheet;
-        gc.drawImage(img, SpriteSheetX, SpriteSheetY, width, height, x, y, width * scale, height * scale);
+        gc.drawImage(img, pointX, SpriteSheetY, width, height, x, y, width * scale, height * scale);
     }
 
     private static int CurrentFrame(double time, int numberOfFrames, double speed) {

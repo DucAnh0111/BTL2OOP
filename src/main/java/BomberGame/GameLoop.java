@@ -9,8 +9,6 @@ import BomberGame.Player.Player;
 import BomberGame.Sence.board;
 import javafx.animation.AnimationTimer;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.util.Vector;
 
@@ -31,7 +29,7 @@ public class GameLoop {
                 currentTime = (currentNanoTime - startTime) / (1000000000.0);
                 Player.isImmortal = Player.immortalTime != 0 && (currentTime - Player.immortalTime) < 4;
                 gc.clearRect(0, 0, GloVariables.CANVAS_WIDTH, GloVariables.CANVAS_WIDTH);
-                if(board.enemy == 3) {
+                if(board.enemy == 0) {
                     System.out.println("nextlever");
                     GloVariables.Level ++;
                     Sound.play("passlevel");
@@ -47,6 +45,8 @@ public class GameLoop {
         board.entities.clear();
         board.balloons.clear();
         board.tiles.clear();
+        board.setTextBoard(GloVariables.Level);
+        board.setTextPOINT(GloVariables.point);
         if (!GloVariables.passLevel) {
             Player.step = 4;
             Player.bombCount = 1;
@@ -64,6 +64,10 @@ public class GameLoop {
         InputManage.handlePlayerMovements();
         Vector<Entity> entities = board.getEntities();
         Player player = board.getPlayer();
+
+        board.setTextPOINT(GloVariables.point);
+        board.setTextNumberOfEnemy(board.getEnemy());
+
         if (GloVariables.NewGame) {
             board.NewGame();
             GloVariables.NewGame = false;
@@ -84,7 +88,7 @@ public class GameLoop {
                         player.incrementBombCount();
                     }
                 }
-            } catch (ArrayIndexOutOfBoundsException e) {
+            } catch (ArrayIndexOutOfBoundsException ignored) {
             }
         }
     }

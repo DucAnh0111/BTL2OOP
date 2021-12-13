@@ -1,43 +1,36 @@
 package BomberGame.GameController;
 
 import BomberGame.Entity.BombAndFlame.Bomb;
-import BomberGame.Entity.Enemy.Balloon;
 import BomberGame.GloVariables.Direction;
 import BomberGame.GloVariables.GloVariables;
 import BomberGame.Player.Player;
 import BomberGame.Sence.board;
-import javafx.event.EventHandler;
 import javafx.scene.input.KeyCode;
-
 import java.util.List;
-import java.util.Vector;
 
 public class InputManage {
     public static void handlePlayerMovements() {
-
         List keyInputs = Event.getInputList();
         Player player = board.getPlayer();
-        Vector<Balloon> balloons = board.getBalloons();
 
         if (keyInputs.contains(KeyCode.UP)) {
-            player.move(player.step, Direction.UP);
+            player.move(Player.step, Direction.UP);
         }
         if (keyInputs.contains(KeyCode.DOWN)) {
-            player.move(player.step, Direction.DOWN);
-
+            player.move(Player.step, Direction.DOWN);
         }
         if (keyInputs.contains(KeyCode.LEFT)) {
             if (player.updatePosition()) {
                 GloVariables.CameraMoving = true;
             }
-            player.move(player.step, Direction.LEFT);
+            player.move(Player.step, Direction.LEFT);
 
         }
         if (keyInputs.contains(KeyCode.RIGHT)) {
             if (player.updatePosition()) {
                 GloVariables.CameraMoving = true;
             }
-            player.move(player.step, Direction.RIGHT);
+            player.move(Player.step, Direction.RIGHT);
         }
 
         if (!keyInputs.contains(KeyCode.RIGHT) &&
@@ -60,10 +53,6 @@ public class InputManage {
                 player.decrementBombCount();
                 keyInputs.remove(KeyCode.SPACE);
             }
-        }
-
-        if (keyInputs.contains(KeyCode.A)) {
-            player.move(4,Direction.A);
         }
     }
 }

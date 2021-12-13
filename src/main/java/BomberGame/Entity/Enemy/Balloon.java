@@ -12,9 +12,7 @@ import BomberGame.GloVariables.Direction;
 import BomberGame.GloVariables.GloVariables;
 import BomberGame.Render;
 import BomberGame.Sence.board;
-
 import java.util.Date;
-import java.util.Random;
 
 public class Balloon extends Move {
     int dir = 0;
@@ -22,7 +20,6 @@ public class Balloon extends Move {
     boolean disappear = false;
     boolean checkCollision = false;
     public int step;
-    Random random = new Random();
     Date dieTime;
     BalloonAnimations balloonAnimations;
     Direction currentDirection;
@@ -71,6 +68,7 @@ public class Balloon extends Move {
             Render.playAnimation(balloonAnimations.getDie());
             if (new Date().getTime() > (600 + dieTime.getTime())) {
                 disappear = true;
+                GloVariables.point +=4;
             }
         }
     }
@@ -107,7 +105,7 @@ public class Balloon extends Move {
         if (isAlive) {
             for (Entity e : board.getEntities()) {
                 if (e instanceof Flame && ((Flame) e).getFlameState()) {
-                    if (Math.abs(this.positionX - ((Flame) e).getPositionX()) < 40 && Math.abs(this.positionY - ((Flame) e).getPositionY()) < 40) {
+                    if (Math.abs(this.positionX - e.getPositionX()) < 40 && Math.abs(this.positionY - e.getPositionY()) < 40) {
                         die();
                         break;
                     }
@@ -121,7 +119,6 @@ public class Balloon extends Move {
         if (isAlive) {
             if (steps == 0) {
                 setCurrentSprite(balloonAnimations.getIdle());
-                return;
             } else {
                 switch (direction) {
                     case UP:

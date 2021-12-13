@@ -12,7 +12,7 @@
    <children>
       <ImageView fx:id="myImageview" fitHeight="431.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../../Resourses/img/anhnen.jpg" />
+            <Image url="C:\Users\admin\Desktop\BTLSo2\BTL2OOP\Resourses\img\anhnen.jpg" />
          </image>
       </ImageView>
       <VBox prefHeight="253.0" prefWidth="193.0">

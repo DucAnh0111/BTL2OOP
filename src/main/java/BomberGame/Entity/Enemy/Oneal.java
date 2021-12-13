@@ -1,14 +1,9 @@
 package BomberGame.Entity.Enemy;
 
 import BomberGame.Animations.OnealAnimations;
-import BomberGame.Animations.PlayerAnimations;
-import BomberGame.Entity.Bounder.BounderBox;
-import BomberGame.Entity.Entity;
-import BomberGame.Entity.Move;
 import BomberGame.Entity.Tiles.Brick;
 import BomberGame.Entity.Tiles.Tile;
 import BomberGame.Entity.Tiles.Wall;
-import BomberGame.GloVariables.Direction;
 import BomberGame.GloVariables.GloVariables;
 import BomberGame.Render;
 import BomberGame.Sence.board;
@@ -21,7 +16,7 @@ public class Oneal extends Balloon {
     public Oneal(int x, int y) {
         super(x, y);
         onealAnimations = new OnealAnimations(this, scale);
-        sprite = onealAnimations.getOneal();
+        sprite = OnealAnimations.getOneal();
         step = 4;
         keepMoving = 0;
     }
@@ -35,6 +30,7 @@ public class Oneal extends Balloon {
             Render.playAnimation(onealAnimations.getDie());
             if (new Date().getTime() > (600 + dieTime.getTime())) {
                 disappear = true;
+                GloVariables.point += 6;
             }
         }
     }
