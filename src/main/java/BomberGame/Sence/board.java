@@ -3,6 +3,7 @@ import BomberGame.Entity.BombAndFlame.Bomb;
 import BomberGame.Entity.Enemy.Balloon;
 import BomberGame.Entity.Enemy.Oneal;
 import BomberGame.Entity.Entity;
+import BomberGame.Entity.Items.immortal;
 import BomberGame.Entity.Tiles.*;
 import BomberGame.GameLoop;
 import BomberGame.GloVariables.GloVariables;
@@ -42,7 +43,6 @@ public class board {
     static {
         sceneStarted = false;
     }
-
     public static Vector<Tile> tiles = new Vector<>();
     public static Vector<Entity> entities = new Vector<>();
     public static Vector<Balloon> balloons = new Vector<>();
@@ -83,6 +83,7 @@ public class board {
 
     public static void loadMap() throws IOException {
         String path = "Resourses/maps/Level" + GloVariables.Level +".txt";
+        // nếu Glovariables mà lớn hơn 5 thì tự động sinh map
         try (BufferedReader inputStream = new BufferedReader(new FileReader(path))) {
             String line;
             int y = 0;
@@ -118,23 +119,20 @@ public class board {
                         case 's':
                             tiles.add(new Brick(x * CELL_SIZE, y * CELL_SIZE, 3));
                             break;
-                        case 'o':
-                            tiles.add(new Portal(x*CELL_SIZE,y*CELL_SIZE));
+                        case 'i':
+                            tiles.add(new Brick(x * CELL_SIZE, y * CELL_SIZE, 4));
                     }
                 }
                 y++;
             }
         }
         enemy = balloons.size();
-
         for (Balloon balloon : balloons) {
             addEntityToGame(balloon);
         }
-
         for (Tile tile : tiles) {
             addEntityToGame(tile);
         }
-
         System.gc();
     }
 
@@ -146,7 +144,6 @@ public class board {
     }
 
     public static void NewGame() {
-
         entities.clear();
         balloons.clear();
         tiles.clear();
@@ -192,6 +189,10 @@ public class board {
                 }
             }
         }
+    }
+
+    public void loadAutoMap() {
+
     }
 
 }

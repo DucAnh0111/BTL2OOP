@@ -10,11 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
-
-import java.io.File;
 import java.io.IOException;
 public class BombermanMain extends Application {
 
@@ -58,10 +54,8 @@ public class BombermanMain extends Application {
 
     @FXML
     TextField tf1;
-
     @FXML
     TextField tf2;
-
     public void NewGame() {
         System.out.println("new game");
         newGame();
@@ -84,6 +78,4 @@ public class BombermanMain extends Application {
         tf2.setVisible(true);
         System.out.println("Information");
     }
-
-
 }

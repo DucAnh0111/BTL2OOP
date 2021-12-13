@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.Vector;
 
 public class GameLoop {
+
     static double currentTime;
     static double prevTime;
     final static long startTime = System.nanoTime();
@@ -28,6 +29,7 @@ public class GameLoop {
             public void handle(long currentNanoTime) {
                 prevTime = currentTime;
                 currentTime = (currentNanoTime - startTime) / (1000000000.0);
+                Player.isImmortal = Player.immortalTime != 0 && (currentTime - Player.immortalTime) < 4;
                 gc.clearRect(0, 0, GloVariables.CANVAS_WIDTH, GloVariables.CANVAS_WIDTH);
                 if(board.enemy == 3) {
                     System.out.println("nextlever");
@@ -42,7 +44,6 @@ public class GameLoop {
     }
 
     public static void nextLever() {
-
         board.entities.clear();
         board.balloons.clear();
         board.tiles.clear();
@@ -88,7 +89,6 @@ public class GameLoop {
         }
     }
 
-
     public static void renderGame() {
         Vector<Entity> entities = board.getEntities();
         for (int i = 0; i < entities.size(); ++i) {
@@ -102,6 +102,5 @@ public class GameLoop {
             }
         }
     }
-
 }
 

@@ -7,6 +7,7 @@ import BomberGame.Entity.Bounder.BounderBox;
 import BomberGame.Entity.Enemy.Balloon;
 import BomberGame.Entity.Enemy.Oneal;
 import BomberGame.Entity.Entity;
+import BomberGame.Entity.Items.immortal;
 import BomberGame.Entity.Move;
 import BomberGame.Entity.PowerUp.BombUp;
 import BomberGame.Entity.PowerUp.FlameUp;
@@ -14,6 +15,7 @@ import BomberGame.Entity.Tiles.Brick;
 import BomberGame.Entity.Tiles.Portal;
 import BomberGame.Entity.Tiles.Tile;
 import BomberGame.Entity.Tiles.Wall;
+import BomberGame.GameLoop;
 import BomberGame.GloVariables.Direction;
 import BomberGame.GloVariables.GloVariables;
 import BomberGame.Render;
@@ -21,6 +23,8 @@ import BomberGame.Sence.board;
 import java.util.Date;
 
 public class Player extends Move {
+    public static double immortalTime = 0;
+    public static boolean isImmortal = false;
     public static int step = 4;
     public static int bombCount = 1;
     boolean isAlive = true;
@@ -46,7 +50,6 @@ public class Player extends Move {
         );
         sprite = playerAnimations.getPlayerIdleSprite();
     }
-
 
     private void setSprite(Sprite s) {
         if (s != null) {
@@ -88,6 +91,7 @@ public class Player extends Move {
         dieTime = new Date();
     }
 
+    //khi đi vào cổng sẽ tự động dịch chuyển đến vị trí của cổng khác
     public void teleport() {
 
     }
@@ -118,7 +122,10 @@ public class Player extends Move {
                     bombCount++;
                     ((BombUp) e).checkCollision(true);
                 }
-
+                if (e instanceof immortal && isCollideEntity(e)) {
+                    immortalTime = GameLoop.getCurrentTime();
+                    ((immortal) e).checkCollision(true);
+                }
                 if (e instanceof Bomb) {
                     boolean bol1 = Math.abs(this.getPositionY() - e.getPositionY()) < 42;
                     boolean bol2 = Math.abs(this.getPositionX() - e.getPositionX()) < 42;
@@ -126,7 +133,7 @@ public class Player extends Move {
                         ((Bomb) e).CollidedPlayer = true;
                     }
                 }
-                if ((e instanceof Balloon || e instanceof Oneal) && e != this && isCollideEntity(e) && !e.isCollidePlayer()) {
+                if ((e instanceof Balloon || e instanceof Oneal) && e != this && isCollideEntity(e) && !e.isCollidePlayer() && isImmortal == false) {
                     die();
                 }
             }

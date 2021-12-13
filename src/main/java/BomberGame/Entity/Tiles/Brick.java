@@ -4,6 +4,7 @@ import BomberGame.Animations.BrickAnimations;
 import BomberGame.Animations.Sprite;
 import BomberGame.Entity.Bounder.BounderBox;
 import BomberGame.Entity.Entity;
+import BomberGame.Entity.Items.immortal;
 import BomberGame.Entity.PowerUp.BombUp;
 import BomberGame.Entity.PowerUp.FlameUp;
 import BomberGame.GloVariables.GloVariables;
@@ -18,7 +19,6 @@ public class Brick extends Tile {
     boolean disappear = false;
     boolean check = true;
     boolean Animated = false;
-
     Date destroyedTime;
     Date animationTime;
     Sprite grass;
@@ -88,6 +88,10 @@ public class Brick extends Tile {
                     break;
                 case 2:
                     board.addEntityToGame(new BombUp(positionX, positionY));
+                    board.removeBrick(positionX,positionY);
+                    break;
+                case 4:
+                    board.addEntityToGame(new immortal(positionX, positionY));
                     board.removeBrick(positionX,positionY);
                     break;
                 default:
