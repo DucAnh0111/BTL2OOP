@@ -64,9 +64,7 @@ public class GameLoop {
         InputManage.handlePlayerMovements();
         Vector<Entity> entities = board.getEntities();
         Player player = board.getPlayer();
-
         board.setTextPOINT(GloVariables.point);
-        board.setTextNumberOfEnemy(board.getEnemy());
 
         if (GloVariables.NewGame) {
             board.NewGame();

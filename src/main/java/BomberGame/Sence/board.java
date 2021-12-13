@@ -33,7 +33,6 @@ public class board {
     static int CELL_SIZE = GloVariables.CELL_SIZE;
     static Label textLEVEL;
     static Label textPOINT;
-    static Label textNumberOfEnemy;
 
     static {
         sceneStarted = false;
@@ -72,13 +71,7 @@ public class board {
         textPOINT.setLayoutY(0);
         textPOINT.setFont(Font.font("Bauhaus 93", 32));
 
-        textNumberOfEnemy = new Label("Number of Enemy: " + board.enemy);
-        textNumberOfEnemy.setLayoutX(288);
-        textNumberOfEnemy.setLayoutY(0);
-        textNumberOfEnemy.setFont(Font.font("Bauhaus 93", 32));
-
-
-        root.getChildren().addAll(textLEVEL,textPOINT,textNumberOfEnemy);
+        root.getChildren().addAll(textLEVEL,textPOINT);
         root.getChildren().add(canvas);
         gc = canvas.getGraphicsContext2D();
         gc.fillRect(0,0, GloVariables.CANVAS_WIDTH, GloVariables.CANVAS_HEIGHT);
@@ -192,10 +185,6 @@ public class board {
         textPOINT.setFont(Font.font("Bauhaus 93", 32));
     }
 
-    public static void setTextNumberOfEnemy(int s) {
-        textNumberOfEnemy.setText("Number Of Enemy: " + s);
-        textNumberOfEnemy.setFont(Font.font("Bauhaus 93", 32));
-    }
 
     public static int getEnemy() {
         return balloons.size();
